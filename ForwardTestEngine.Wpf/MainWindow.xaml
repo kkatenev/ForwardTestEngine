@@ -1,0 +1,51 @@
+﻿<Window
+    x:Class="ForwardTestEngine.Wpf.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ForwardTestEngine.Wpf"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Forward Test Engine"
+    Width="800"
+    Height="450"
+    mc:Ignorable="d">
+    <Grid Margin="15">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <!--  Row 0  -->
+        <StackPanel Margin="15">
+            <Label HorizontalAlignment="Center" Content="Выбор двигателя" />
+            <ComboBox DisplayMemberPath="Name" ItemsSource="{Binding EnginesList}" />
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Margin="15">
+            <Label HorizontalAlignment="Center" Content="Стенд для теста" />
+            <ComboBox DisplayMemberPath="Name" ItemsSource="{Binding TestStandsList}" />
+        </StackPanel>
+
+        <Button
+            Grid.Column="2"
+            Margin="15"
+            Command="{Binding StartTestCommand}"
+            Content="Начать тест" />
+
+
+        <!--  Row 1  -->
+        <Border
+            Grid.Row="1"
+            Grid.ColumnSpan="3"
+            Margin="15,50"
+            BorderBrush="Gray"
+            BorderThickness="1">
+            <TextBox Text="{Binding LogMessages, Mode=OneWay}" TextWrapping="Wrap" />
+        </Border>
+    </Grid>
+</Window>
