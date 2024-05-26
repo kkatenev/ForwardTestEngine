@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ForwardTestEngine.Interfaces;
+using ForwardTestEngine.Wpf.Other;
 
 namespace ForwardTestEngine.TestSimulation
 {
@@ -31,11 +33,11 @@ namespace ForwardTestEngine.TestSimulation
 
                 engineTemperature += (heatingRate - coolingRate);
                 
-                Console.WriteLine($"Time: {i}, Engine Temperature: {engineTemperature}");
+                Log.Add($"Time: {i}, Engine Temperature: {Math.Round(engineTemperature, 3)}");
 
                 if (engineTemperature >= _engine.OverheatTemperature)
                 {
-                    Console.WriteLine($"Engine overheated at time {i}");
+                    Log.Add($"Engine overheated at time {i}");
                     break;
                 }
                 await Task.Delay(delay);

@@ -57,6 +57,7 @@
     </ApplicationDefinition>
     <Compile Include="Engines\CombustionEngine.cs" />
     <Compile Include="Interfaces\IEngine.cs" />
+    <Compile Include="Other\Log.cs" />
     <Compile Include="Panels\InputDialogWindow.xaml.cs">
       <DependentUpon>InputDialogWindow.xaml</DependentUpon>
     </Compile>

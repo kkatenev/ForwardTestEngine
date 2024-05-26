@@ -23,13 +23,20 @@
         <!--  Row 0  -->
         <StackPanel Margin="15">
             <Label HorizontalAlignment="Center" Content="Выбор двигателя" />
-            <ComboBox DisplayMemberPath="Name" ItemsSource="{Binding EnginesList}" />
+            <ComboBox
+                DisplayMemberPath="Name"
+                ItemsSource="{Binding EnginesList}"
+                SelectedItem="{Binding SelectedEngine}" />
         </StackPanel>
 
         <StackPanel Grid.Column="1" Margin="15">
             <Label HorizontalAlignment="Center" Content="Стенд для теста" />
-            <ComboBox DisplayMemberPath="Name" ItemsSource="{Binding TestStandsList}" />
+            <ComboBox
+                DisplayMemberPath="Name"
+                ItemsSource="{Binding TestStandsList}"
+                SelectedItem="{Binding SelectedTestStand}" />
         </StackPanel>
+
 
         <Button
             Grid.Column="2"

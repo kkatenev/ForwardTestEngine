@@ -1,15 +1,17 @@
 ﻿using ForwardTestEngine.Interfaces;
 using ForwardTestEngine.TestSimulation;
 using ForwardTestEngine.TestStands;
+using ForwardTestEngine.Wpf.Other;
 using ForwardTestEngine.Wpf.Panels;
 using System;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace ForwardTestEngine.Wpf
 {
     public class ForwardTestEngineModel
     {
-        public void StartTest(TestStand testStand)
+        async public Task StartTest(TestStand testStand)
         {
             var ambientTemperature = GetInputFromUser("Enter ambient temperature:");
 
@@ -18,13 +20,13 @@ namespace ForwardTestEngine.Wpf
                 return;
             }
 
-            Console.WriteLine("\nStarting engine simulation...\n");
-            var finalTemperature = testStand.TestOverheat(ambientTemperature.Value);
-            Console.WriteLine($"\nFinal engine temperature: {finalTemperature}°C");
+            Log.Add("\nStarting engine simulation...\n");
+            var finalTemperature = await testStand.TestOverheat(ambientTemperature.Value);
+            Log.Add($"\nFinal engine temperature: {Math.Round(finalTemperature, 3)}°C");
 
-            Console.WriteLine("\nTesting maximum power...\n");
+            Log.Add("\nTesting maximum power...\n");
             var maxPower = testStand.TestMaxPower(out double maxPowerSpeed);
-            Console.WriteLine($"Maximum power: {maxPower} kW at {maxPowerSpeed} rad/s");
+            Log.Add($"Maximum power: {maxPower} kW at {maxPowerSpeed} rad/s");
         }
 
         private double? GetInputFromUser(string message)

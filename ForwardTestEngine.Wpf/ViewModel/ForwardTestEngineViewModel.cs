@@ -8,6 +8,7 @@ using ForwardTestEngine.Engines;
 using ForwardTestEngine.Interfaces;
 using ForwardTestEngine.TestSimulation;
 using ForwardTestEngine.TestStands;
+using ForwardTestEngine.Wpf.Other;
 
 namespace ForwardTestEngine.Wpf
 {
@@ -17,9 +18,36 @@ namespace ForwardTestEngine.Wpf
 
         public ForwardTestEngineViewModel()
         {
+            Log.MessageLogged += (sender, message) =>
+            {
+                LogMessages += $"{message}\n";
+            };
+
             _enginesList.Add(new CombustionEngine());
-            _testStandsList.Add(new TestStand(new EngineSimulation(_enginesList[0])));
+            _testStandsList.Add(new TestStand(new EngineSimulation(new CombustionEngine())));
         }
+
+        public IEngine SelectedEngine
+        {
+            get => _selectedEngine;
+            set
+            {
+                _selectedEngine = value;
+                OnPropertyChanged(nameof(SelectedEngine));
+            }
+        }
+        private IEngine _selectedEngine;
+
+        public TestStand SelectedTestStand
+        {
+            get => _selectedTestStand;
+            set
+            {
+                _selectedTestStand = value;
+                OnPropertyChanged(nameof(SelectedTestStand));
+            }
+        }
+        private TestStand _selectedTestStand;
 
         public List<IEngine> EnginesList
         {
@@ -55,18 +83,13 @@ namespace ForwardTestEngine.Wpf
         }
 
         public ICommand StartTestCommand => new RelayCommand(
-            param => StartTestAsync(),
-            param => true
+            async param => await StartTestAsync(),
+            param => (SelectedTestStand != null && SelectedEngine != null)
         );
 
-        private void StartTestAsync()
+        async private Task StartTestAsync()
         {
-            _forwardTestEngineModel.StartTest(_testStandsList[0]);
-        }
-
-        private void Model_LogMessageAdded(object sender, string message)
-        {
-            LogMessages += $"{message}\n";
+            await _forwardTestEngineModel.StartTest(SelectedTestStand);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
